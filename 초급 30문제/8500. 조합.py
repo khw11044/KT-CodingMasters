@@ -23,14 +23,60 @@ A개의 원소에서 B개의 원소를 뽑는 조합에 대한 총 경우의 수
 '''
 # 
 
+
 import sys
 sys.stdin=open('input.txt', 'r')
 input=sys.stdin.readline
 
-from itertools import combinations
+def comb(n, r):
+    a = 1 
+    b = 1
+    if n == r or r==0:
+        return 1
+    for i in range(r):
+        a *= (n-i) 
+        b *= (r-i)
+    return a//b
 
 if __name__=="__main__":
-    A,B=map(int, input().split())
-    print(len(list(combinations(range(1, A+1), B))))
+    A,B=map(int, input().split())   # A개의 원소들에서 B개를 뽑기
+    print(comb(A, B))
+
+
+'''
+DP로 푸는 법 
+import sys
+sys.stdin=open('input.txt', 'r')
+input=sys.stdin.readline
+
+if __name__=="__main__":
+    A,B=map(int, input().split())   # A개의 원소들에서 B개를 뽑기
+    dp = [[0]*(B+1) for _ in range(A+1)]
+
+    for a in range(A+1):
+        for j in range(min(a, B) + 1):
+            if j == 0 or j == a:
+                dp[a][j] = 1
+            else:
+                dp[a][j] = dp[a-1][j-1] + dp[a-1][j]
     
-    
+    print(dp[A][B])
+'''
+
+'''
+# from math import comb 로 푸는 법 
+import sys
+input=sys.stdin.readline
+
+from math import comb
+
+# 입력 받기
+A, B = map(int, input().split())
+
+# A개의 원소에서 B개의 원소를 뽑는 조합의 경우의 수 계산
+result = comb(A, B)
+
+# 결과 출력
+print(result)
+
+'''
