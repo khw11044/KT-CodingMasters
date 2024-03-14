@@ -28,14 +28,15 @@ import sys
 sys.stdin=open('input.txt', 'r')
 input=sys.stdin.readline
 
+# 조합 : nCr = n! // (n-r)! * r!
 def comb(n, r):
     a = 1 
     b = 1
     if n == r or r==0:
         return 1
     for i in range(r):
-        a *= (n-i) 
-        b *= (r-i)
+        a *= (n-i)  # n!/(n-r)! -> 즉, n*(n-1)*(n-2)* ... *(n-r)
+        b *= (r-i)  # r!
     return a//b
 
 if __name__=="__main__":
