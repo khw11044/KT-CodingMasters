@@ -35,48 +35,9 @@ input=sys.stdin.readline
 
 
 if __name__=="__main__":
-    N,M=map(int, input().split())
-    board = [list(map(int, input().split())) for _ in range(N)]
-    
-    n_row = 0 
-    for row in board:
-        if 0 not in row:
-            n_row += 1
-    
-    # 행렬 Transform
-    Trans_board = list(zip(*board))
-    
-    n_col = 0
-    for col in Trans_board:
-        if 0 not in col:
-            n_col += 1
-    
-    # 중복을 제거해야한다. 
-    print(max(n_row, n_col))
+    N = int(input())
+    if N%2 != 0:
+        print('RUN')
+    else:
+        print('STAY')
 
-'''
-설명 
-먼저 행별로 봐서 행별 필 수 기둥수를 카운트한다.
-이후 행렬변환으로 열별 필 수 기둥수를 카운트한다. 
-
-중복되는 경우가 존재할 수 있다. 
-예를 들어 행에서 필수 기둥을 세우면 필수로 기둥을 세워야하는 열의 문제도 해결 될 수 있다.
-따라서 각 행별, 열별 필 수 기둥 수를 카운트해서 더하는게 아니라 둘 중 큰 수를 골라줘야한다.
-
-예를 들어 
-4 3
-1 1 1
-1 0 1
-1 0 1
-1 0 1
-
-이면 
-행별로 보면 (0,0) 또는 (0,1) 또는 (0,2) 중에 기둥 0을 하나 놓으면 된다. 
-열별로 보면 (0,0)~(3,0)중 하나를 그리고 (0,2)~(3,2)중 하나에 기둥 0을 총 2개는 놓아야한다.
-
-이때, (0,0) 또는 (0,2)중 하나는 필수로 기둥을 세우면 행별 문제를 해결하게 되고 
-열별로 하나 더 세운 즉 총 2개의 기둥을 세우면 문제가 해결된다. 
-
-규칙 또는 점화식 느낌으로 풀면 된다. 복잡하게 생각하지 말고 
-
-'''
