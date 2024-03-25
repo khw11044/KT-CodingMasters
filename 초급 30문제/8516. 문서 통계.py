@@ -39,6 +39,6 @@ input = sys.stdin.readline
 
 if __name__ == "__main__":
     doc = input().rstrip()
-    print(len(doc))
-    print(len(doc.replace(' ','')))
-    print(len(doc.split()))
+    print(len(doc))                     # 공백을 포함한 글자수 
+    print(len(doc.replace(' ','')))     # 공백을 제외한 글자수 
+    print(len(doc.split()))             # 단어의 수 
