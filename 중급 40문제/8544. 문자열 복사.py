@@ -43,33 +43,10 @@ import sys
 sys.stdin=open('input.txt', 'r')
 
 
-def min_copies(S1, S2):
-    # S1의 각 문자에 대해 필요한 최소 복사 횟수를 계산
-    max_copies = 0
-    for char in set(S1):
-        # S2에서 char의 최대 연속 길이를 찾는다
-        max_len = 0
-        current_len = 0
-        for s in S2:
-            if s == char:
-                current_len += 1
-                max_len = max(max_len, current_len)
-            else:
-                current_len = 0
-        
-        # 이 최대 연속 길이를 만들기 위한 복사 횟수를 계산한다
-        # 예: 연속 길이가 5이고 S1에 해당 문자가 1개 있으면, 필요한 복사 횟수는 2 (2^2 = 4 < 5 <= 2^3 = 8)
-        copies = 0
-        while (2 ** copies) * S1.count(char) < max_len:
-            copies += 1
-        max_copies = max(max_copies, copies)
-    
-    return max_copies
             
 if __name__ == "__main__":
     S1 = input().strip()
     S2 = input().strip()
 
-    print(min_copies(S1, S2))
 
     
