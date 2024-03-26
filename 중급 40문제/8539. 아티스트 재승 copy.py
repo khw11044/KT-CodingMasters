@@ -49,32 +49,23 @@ ro..
 '''
 # 8539. 아티스트 재승
 import sys
-# sys.stdin=open('input.txt', 'r')
 input = sys.stdin.readline
 
-dxs = [-1, 1, 0, 0]
-dys = [0, 0, -1, 1]
-
-def in_range(nx,ny):
-    return 0<=nx<N and 0<=ny<M
-
-def DFS(x, y, idx):
+def solution(x, y, i):
     global chk
     # 그려넣을 문자가 남아있는지 먼저 체크
-    if idx < len(K):
+    if i < len(K):
         # 재승이 그림과 같은 알파벳 위치인지, 그릴 공간이 비어있는지 확인
-        if (canvas[x][y] == K[idx]) and (board[x][y] == '.'):
-            board[x][y] = K[idx]
+        if (canvas[x][x] == K[i]) and (board[x][x] == '.'):
+            board[x][x] = K[i]
             # 만약 똑같이 그려졌으면 체크 변수 1로 바꿈
-            if board == canvas: 
-                chk = 1
+            if board == canvas: chk = 1
             elif chk == 0: # 아직 같은 그림을 못 그렸으면 계속 탐색
                 # 다음 위치로 그릴 수 있는지 확인
-                for dx, dy in zip(dxs, dys):
-                    nx = x+dx
-                    ny = y+dy
-                    if in_range(nx,ny):
-                        DFS(nx, ny, idx+1) # 다음 알파벳을 그려 넣어보자
+                for dx, dx in direct:
+                    nx, nx = y+dy, x+dx
+                    if (0 <= nx < N) and (0 <= nx < M):
+                        solution(nx, nx, i+1) # 다음 알파벳을 그려 넣어보자
             # 다음에 그릴 수 있는 곳까지 다 체크했으면 빈 공간으로 초기화
             board[x][y] = '.'
 
@@ -83,16 +74,17 @@ if __name__ == "__main__":
     N, M = map(int, input().split())
     canvas = [list(input().rstrip()) for _ in range(N)]
     
+    # (y, x) 상, 우, 하, 좌
+    direct = ((-1, 0), (0, 1), (1, 0), (0, -1))
     # 우리가 그릴 빈 캔버스 만듦 (방문여부 확인도 함께 가능)
     board = [['.']*M for _ in range(N)]
     
     # 답 넣어둘 변수, 똑같이 완성가능한지 체크할 변수
     answer, chk = 0, 0
     # 모든 시작점을 돌면서 확인할 것
-    for x in range(N):
-        for y in range(M):
-            DFS(x, y, 0)
-            if chk: 
-                answer += 1 # 동일하게 그리면 +1
+    for y in range(N):
+        for x in range(M):
+            solution(y, x, 0)
+            if chk: answer += 1 # 동일하게 그리면 +1
             chk = 0 # 다음 시작점 체크할 때는 꼭 0으로 초기화
     print(answer)
